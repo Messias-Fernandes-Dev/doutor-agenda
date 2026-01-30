@@ -1,11 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { NumericFormat } from "react-number-format";
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+
+import { medicalSpecialties } from "../_constants"
 
 
 
@@ -70,11 +74,61 @@ const UpsertDoctorForm = () => {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
-
+        <FormField
+          control={form.control}
+          name="specialty"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Especialidade</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione uma especialidade" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {medicalSpecialties.map((specialty) => (
+                    <SelectItem key={specialty.value} value={specialty.value}>
+                      {specialty.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="appointmentPrice"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preço da consulta</FormLabel>
+              <NumericFormat
+                value={field.value}
+                onValueChange={(value) => {
+                  field.onChange(value.floatValue);
+                }}
+                decimalScale={2}
+                fixedDecimalScale
+                decimalSeparator=","
+                allowNegative={false}
+                allowLeadingZeros={false}
+                thousandSeparator="."
+                customInput={Input}
+                prefix="R$"
+              />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <DialogFooter>
           <Button type="submit">Adicionar</Button>
         </DialogFooter>
