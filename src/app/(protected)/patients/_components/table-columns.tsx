@@ -25,7 +25,7 @@ export const patientsTableColumns: ColumnDef<Patient>[] = [
     header: "Telefone",
     cell: (params) => {
       const patient = params.row.original;
-      const phoneNumber = patient.phone;
+      const phoneNumber = patient.phoneNumber;
       if (!phoneNumber) return "";
       const formatted = phoneNumber.replace(
         /(\d{2})(\d{5})(\d{4})/,

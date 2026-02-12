@@ -61,7 +61,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
         </p>
         <p className="flex items-center gap-2 text-sm text-muted-foreground">
           <PhoneIcon className="h-4 w-4 shrink-0" />
-          {patient.phone}
+          {patient.phoneNumber}
         </p>
       </CardContent>
       <Separator />
